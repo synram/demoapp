@@ -1,0 +1,271 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>WCF Test Page</title>
+</head>
+<body>
+    <select id="ddlMethod" onchange="ChangeMethod()">
+    <option>GetList</option>
+    <option>GetAllCatAndSubCat</option>
+    <option>GetCouponsDetail</option>
+    <option>GetCouponBanner</option>
+     <option>GetNearByMeDetail</option>
+         <option>GetCategory</option>
+          <option>GetSubCategory</option> 
+        <option>ShareCard</option>
+        <option>SearchVideos</option>
+        <option>GetBadgesByUserID</option>
+        <option>GetAllGameOfCountry</option>
+        <option>GetAdvertisements</option>
+        <option>GetUserInfo</option>
+        <option>GetAllKeywordsByUserId</option>
+        <option>AddUpdateUserInfo</option>
+        <option>GetAllShopsInfoByMallId</option>
+        <option>GetAllShopsInfoByMallIdAndCategoryId</option>
+        <option>GetAllOfferOfMall</option>
+        <option>GetOfferAgainstOfferID</option>
+        <option>GetFloorInfo</option>
+        <option>Initialize</option>
+        <option>GetNextHelp</option>
+        <option>AddUpdateDayReport</option>
+        <option>GetWeekData</option>
+        <option>GetDayData</option>
+        <option>GetListofWeekNo</option>
+        <option>GetCategoryTotalAgainstShop</option>
+    </select>
+    <br />
+    <input type="button" onclick="CallWcfAjax()" value="Call WCF via AJAX" />
+    Result <span id="result"></span>
+    <script type="text/javascript">
+        var body = '';
+      //  var url = "http://192.168.0.53/senchanew/Service.svc/ajaxEndpoint/";
+    //   var url = "http://blueme-ws.synsoftglobal.com/service1.svc/ajaxEndpoint/";
+    //var url="http://192.168.0.53/VisitingCardWcfService/service1.svc/ajaxEndpoint/";
+        //var url = "http://192.168.0.53/CouponsService/CouponService.svc/ajaxEndpoint/";
+        //var url = "http://110.234.223.202:22222/CouponsServices/CouponService.svc/ajaxEndpoint/";
+        //var url = "http://localhost/VisitingCardWcfService/Service1.svc/ajaxEndpoint/";
+        // var url = "http://localhost/AGServices/AGService.svc/ajaxEndpoint/";
+       //var url = "http://www.beamm.me/api/mobile/storelist/"
+	   var url ="http://54.243.218.4/api/users/sign_in"
+        var urlWithMethod = '';
+        function ChangeMethod() {
+            var index = document.getElementById('ddlMethod').selectedIndex;
+            var selected_option_value = document.getElementById('ddlMethod').options[index].value;
+            switch (selected_option_value) {
+                
+                case 'GetList':
+                    body = '{"email":"test@gmail.com","password":"422134"}';
+                    break;
+                case 'GetAllCatAndSubCat':
+                    body = '{}';
+                    break;
+                case 'GetCouponBanner':
+                    body = '{}';
+                    break;
+                case 'GetNearByMeDetail':
+                    //body = '{"lat":"21.5","lng":"75.6","radius":"120","Place":"Indore"}';
+                    body = '{"lat":"21.5","lng":"75.6","radius":"120"}';
+                    break;
+                  case 'GetCategory':
+                    body = '{}';
+                    break;
+                  case 'GetSubCategory':
+                    body = '{"CategoryID":"1"}';
+                    break;
+               case 'Singin':
+                    body = '{"FirstName":"Ram","LastName":"Shah","FacebookID":"100000290462646","Phone":"","ProfilePicURL":"http://graph.facebook.com/100000290462646/picture","Country":"","AccessToken":"AACCVhW3IWEBALNbgTtTU3MUwmJvf29oGmhKHpud79T8jCGwj3xuJAc8mtEwAZAPp1fvvHN2ZCap72Hvf7Af6YcgIUb48XZB36Ho1dGZBQ5WdisO0Pqe"}';
+                    break;
+                case 'ShareCard':
+                    body = '{"CardId":"311","MobNo":"15664563","DeviceName":"android","countryCode":34}';
+                    break;
+
+                case 'GetBadgesByUserID':
+                    body = '{"UserID":"1"}';
+                    break;
+
+                case 'GetCategoryTotalAgainstShop':
+                    body = '{"xUserName":"sgsadmin","xPassword":"sgs#admin","xStartDate":"1/04/2012","xEndDate":"1/10/2012","xShopID":71}';
+                    break;
+
+                case 'GetAllGameOfCountry':
+                    body = '{"GameID":1,"Country":"india"}';
+                    break;
+
+                case 'GetAdvertisements':
+                    body = '{"PageID":"1","GameID":"1"}';
+                    break;
+
+                case 'GetUserInfo':
+                    //body = '{"xMallID":"eb15c5e5-3afb-40e1-9593-029caf6f9f45","xUserName":"ShopAdmin1","xPassword":"synsoft1"}';
+                     body = '{"UserID":"3","GameID":"1"}';
+                    break;
+                case 'GetAllKeywordsByUserId':
+           body = '{"UserID":"3"}';
+                    break;
+              
+                case 'AddUpdateUserInfo':
+                    body = '{"SubcriptionUserID":"103","GameID":"1","NoCoins":"7"}';
+                    break;
+
+                case 'GetMallInfo':
+                    body = '{"xMallID":"19dab05b-7471-42f2-bc24-577457693bdb"}';
+                    break;
+                case 'GetShopInfo':
+                    body = '{"xShopID":5}';
+                    break;
+
+                case 'GetAllCategories':
+                    body = '{"xMallID":"eb15c5e5-3afb-40e1-9593-029caf6f9f45"}';
+                    break;
+
+                case 'GetAllShopsAgainstMallID':
+                    body = '{"xMallID":"eb15c5e5-3afb-40e1-9593-029caf6f9f45"}';
+                    break;
+
+                case 'ShopsofMallAndCategory':
+                    body = '{"xMallID":"eb15c5e5-3afb-40e1-9593-029caf6f9f45","xCategoryID":2}';
+                    break;
+                case 'GetOffersInShop':
+                    body = '{"xShopID":71}';
+                    break;
+
+                case 'GetAllShopsInfoByMallId':
+                    body = '{"xMallId":"eb15c5e5-3afb-40e1-9593-029caf6f9f45","xRecordNo":24}';
+                    break;
+                case 'GetAllShopsInfoByMallIdAndCategoryId':
+                    body = '{"xMallID":"8e0cda31-72c0-4755-9173-2f6f0e2ba751","xCategoryID":0,"xRecordNo":0,"xShopName":""}';
+                    break;
+
+                case 'GetAllOfferOfMall':
+                    body = '{"xMallID":"19dab05b-7471-42f2-bc24-577457693bdb","xRecordNo":0}';
+                    break;
+
+                case 'GetOfferAgainstOfferID':
+                    body = '{"xOfferID":2}';
+                    break;
+
+                case 'GetFloorInfo':
+                    body = '{"xMallID":"eb15c5e5-3afb-40e1-9593-029caf6f9f45"}';
+                    break;
+
+
+
+                case 'RegisterMe':
+                    body = '{"UserName":"Virendra","Password":"Mahesh123","FirstName":null,"LastName":null,"Height_ft":null,"Height_inch":null,"Weight":null,"Position":null,"Email":"v@synsoftglobal.com","DeviceId":"dev6","AppleToken":null,"EnableSound":true,"AutoSharingOn":true}';
+                    break;
+                case 'AddNewCourt':
+                    body = '{"SessionTokenID":"f9f439f9-e86e-4178-9995-b0b582bd2407","CourtName":"Treasure island" ,"Latitude":"22.721278397885154 ","Longitude":"75.878427028656","img":null}';
+                    break;
+                case 'GetCourtInfo':
+                    body = '{"SessionTokenID":"52f1e009-461e-4e80-908b-3e60c3963957","Latitude":"22.9304828643799","Longitude":"76.0215301513672"}';
+                    break;
+                case 'AllCourts':
+                    body = '{"SessionTokenID":"4d0cc631-a3cb-449e-b516-29453d02044c","latitude":"22.9304828643799","longitude":"76.0215301513672"}';
+                    break;
+                case 'GetUserProfile':
+                    body = '{"SessionTokenID":"3c4b5557-d9de-4fc8-924e-675f82024119"}';
+                    break;
+                case 'CheckIn':
+                    body = '{"SessionTokenID":"4d0cc631-a3cb-449e-b516-29453d02044c","LastCourtId":"0","NewCourtId":"43","UserLatitude":"1.1","UserLongitude":"1.1"}';
+                    break;
+                case 'CheckOut':
+                    body = '{"SessionTokenID":"4d0cc631-a3cb-449e-b516-29453d02044c","LastCourtId":"43"}';
+                    break;
+                case 'LogoutMe':
+                    body = '{"SessionTokenID":"0b906a31-3a93-48e8-be4c-b2fc4289eb25"}';
+                    break;
+                case 'UpdateProfile':
+                    body = '{"FirstName":"Ashish","LastName":"Gupte","Height_ft":null,"Height_inch":null,"Weight":null,"Position":null,"Email":"ashish@synsoftglobal.com","img":null,"SessionTokenID":"cbcdebac-95c8-4a28-8c06-5f14ede3b162"}';
+                    break;
+                case 'EditCourt':
+                    body = '{"SessionTokenID":"cbcdebac-95c8-4a28-8c06-5f14ede3b162","CourtName":"Court 2","img":null,"Latitude":"1.11","Longitude":"1.11"}';
+                    break;
+                case 'AddUpdateUserRating':
+                    body = '{"UserId":63,"RatedByUserId":66,"Shooting":0,"Assists":0,"Handles":0,"Rebounding":0,"Defense":0}';
+                    break;
+                case 'GetPlayersOfCourt':
+                    body = '{"CourtId":36,"UserId":0}';
+                    break;
+                case 'GetLeagueStats':
+                    body = '{"UserId":73}';
+                    break;
+                case 'UpdateAppleTokenId':
+                    body = '{"DeviceId":"6600d432ea1288621556b78f5f350584fdaa0c13","AppleToken":"df256229bb7edd9f6274c8c99003abb16305e050e0da829114ef0c279b8bccc9"}';
+                    break;
+                case 'GetMyStats':
+                    body = '{"UserId":83}';
+                    break;
+                case 'MakeLive':
+                    body = '{"SessionTokenID":"df56b524-981e-4031-b238-0bdfac2e69a3","UserLatitude":"22.72076034545898","UserLongitude":"75.87448883056641","AutoCheckedin":true}'
+                    break;
+                case 'GetLastRating':
+                    body = '{"UserId":37,"RatedByUserId":38}'
+                    break;
+                case 'SendMail':
+                    body = '{"UserId":73,"To":"jaiswal.hemant.09@gmail.com,hemant@synsoftglobal.com","Subject":"Test","Message":"Test"}'
+                    break;
+                case 'UpdateBadgeCount':
+                    body = '{"SessionTokenID":"3c4b5557-d9de-4fc8-924e-675f82024119","BadgeCount":-12}';
+                    break;
+                case 'SaveImage':
+                    body = '{"img":".","ID":37,"flag":true}';
+                    break;
+                case 'SendNotification':
+                    body = '{"AppleToken":"df256229bb7edd9f6274c8c99003abb16305e050e0da829114ef0c279b8bccc9","Msg":"abc","BadgeCount":1,"OrderNumber":1}';
+                    break;
+                case 'LeaveThisLeague':
+                    body = '{"SessionTokenID":"52f1e009-461e-4e80-908b-3e60c3963957","CourtId":"36"}';
+                    break;
+                case 'GetMallInfo':
+                    body = '{"MallID":1}';
+                    break;
+
+
+            }
+            urlWithMethod = url + selected_option_value;
+        }
+
+        function CallWcfAjax() {
+            ChangeMethod();
+            var xmlHttp; //new XMLHttpRequest();
+            if (window.XMLHttpRequest) {
+                alert('call');
+                xmlHttp = new XMLHttpRequest();
+            }
+            else {
+                xmlHttp = new ActiveXObject("Microsoft.XmlHttp");
+            }
+
+            //var url = "http://localhost:50631/League.svc/ajaxEndpoint/"; 
+
+            //url = url + "Sum2Integers";
+            //url = url + "RegisterMe";
+            alert(urlWithMethod);
+            //var body = ' {"n1":';
+            //body = body + document.getElementById("num1").value + ',"n2":';
+            //body = body + document.getElementById("num2").value + '}';
+            //        var body = '{"UserName":"Ashish4","Password":"Ashish","FirstName":"Ashish123","LastName":"Gupte","Height_ft":5,"Height_inch":11,"Weight":"68","Position":"Mid-Field","Email":"ashish@synsoftglobal.com","ProfilePic_Path":"Ashish.png","DeviceId":"dev1","AppleToken":"apptkn123","EnableSound":true,"AutoSharingOn":false}';
+
+            //            var body = '{"UserName":"Ashish41","Password":"Ashish","FirstName":null,"LastName":null,"Height_ft":null,"Height_inch":null,"Weight":null,"Position":null,"Email":"ashish@synsoftglobal.com","ProfilePic_Path":null,"DeviceId":"dev11","AppleToken":"apptkn123","EnableSound":true,"AutoSharingOn":false}';
+
+
+            alert(body);
+            // Send the HTTP request
+            xmlHttp.open("POST", urlWithMethod, true);
+            alert(urlWithMethod);
+            //xmlHttp.setRequestHeader("Content-type", "application/json");
+            xmlHttp.setRequestHeader("Content-type", "text/html;");
+            xmlHttp.send(body);
+            // Create result handler
+            xmlHttp.onreadystatechange = function X() {
+                alert(xmlHttp.readyState);
+                if (xmlHttp.readyState == 4) {
+                    alert(xmlHttp.responseText);
+                    result.innerText = xmlHttp.responseText;
+                    //alert(xmlHttp.responseText);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
